@@ -36,6 +36,29 @@ class Home extends BaseController
                 'testimoni' => 'Udaranya sangat indah. Tidak terlalu ramai, harga yang terjangkau, fasilitas yang lengkap.'
             ]
         ];
+        $data['camping'] = (object)[
+            (object)[
+                'nama_camping' => 'Camping Manja',
+                'jarak' => '10 Km',
+                'harga' => 'Rp 100.000,-',
+                'foto' => 'upload/owl/1.jpg',
+                'lokasi' => 'JWJR+7Q2, Kelitu, Kec. Bintang, Kabupaten Aceh Tengah, Aceh'
+            ],
+            (object)[
+                'nama_camping' => 'Kelaping Camping',
+                'jarak' => '20 Km',
+                'harga' => 'Rp 150.000,-',
+                'foto' => 'upload/owl/2.jpg',
+                'lokasi' => 'JWJR+7Q2, Kelitu, Kec. Bintang, Kabupaten Aceh Tengah, Aceh'
+            ],
+            (object)[
+                'nama_camping' => 'Camping Ground Takengon',
+                'jarak' => '30 Km',
+                'harga' => 'Rp 200.000,-',
+                'foto' => 'upload/owl/3.jpg',
+                'lokasi' => 'JWJR+7Q2, Kelitu, Kec. Bintang, Kabupaten Aceh Tengah, Aceh'
+            ]
+        ];
         return view('home', $data);
     }
 }

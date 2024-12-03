@@ -2,8 +2,14 @@
 
 namespace App\Controllers;
 
+use App\Models\ModelDataDiri;
+use App\Models\ModelDesa;
+use App\Models\ModelKabupaten;
+use App\Models\ModelKecamatan;
+use App\Models\ModelProvinsi;
 use App\Models\ModelUser;
 use CodeIgniter\API\ResponseTrait;
+use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Session\Session as SessionSession;
 use Config\Session;
 
@@ -19,13 +25,13 @@ class Home extends BaseController
         $data['title'] = 'Login';
         $session = \Config\Services::session();
         if ($session->get('login')) {
-            // if ($session->get('role') == 'admin') {
-            //     return redirect()->to('/admin');
-            // } elseif ($session->get('role') == 'user') {
-            //     return redirect()->to('/user');
-            // } elseif ($session->get('role') == 'owner') {
-            //     return redirect()->to('/owner');
-            // }
+            if ($session->get('role') == 'administrator') {
+                return redirect()->to('/admin');
+            } elseif ($session->get('role') == 'user') {
+                return redirect()->to('/user');
+            } elseif ($session->get('role') == 'owner') {
+                return redirect()->to('/owner');
+            }
         }
         return view('login', $data);
     }
@@ -213,5 +219,155 @@ class Home extends BaseController
             ]
         ];
         return view('home', $data);
+    }
+    // use for update profil
+    function update_profil()
+    {
+        $data['title'] = 'Update Diri Diri';
+        return view('update_profil', $data);
+    }
+    function update_profil_process()
+    {
+        $validation = \Config\Services::validation();
+        $validation->setRules([
+            'nama_user' => 'required',
+            'nomor_hp' => 'required|numeric',
+            'provinsi' => 'required',
+            'kabupaten' => 'required',
+            'kecamatan' => 'required',
+            'desa' => 'required',
+            'alamat' => 'required',
+            'tanda_pengenal' => 'uploaded[tanda_pengenal]|mime_in[tanda_pengenal,image/jpg,image/jpeg,image/png]|max_size[tanda_pengenal,4096]',
+        ], [
+            'nama_user' => [
+                'required' => 'Nama tidak boleh kosong',
+            ],
+            'nomor_hp' => [
+                'required' => 'No HP tidak boleh kosong',
+                'numeirc' => 'No HP harus berupa angka',
+            ],
+            'provinsi' => [
+                'required' => 'Provinsi tidak boleh kosong'
+            ],
+            'kabupaten' => [
+                'required' => 'Kabupaten tidak boleh kosong'
+            ],
+            'kecamatan' => [
+                'required' => 'Kecamatan tidak boleh kosong'
+            ],
+            'desa' => [
+                'required' => 'Desa tidak boleh kosong'
+            ],
+            'alamat' => [
+                'required' => 'Alamat tidak boleh kosong',
+            ],
+            'tanda_pengenal' => [
+                'uploaded' => 'Tanda Pengenal tidak boleh kosong',
+                'mime_in' => 'Tanda Pengenal harus berformat jpg, jpeg, atau png',
+                'max_size' => 'Ukuran file maksimal 4MB',
+            ]
+        ]);
+        if (!$validation->withRequest($this->request)->run()) {
+            $response = [
+                'status' => 'validation_failed',
+                'message' => $validation->getErrors(),
+            ];
+        } else {
+            $session = \Config\Services::session();
+            $id_user = $session->get('id');
+            $nama_user = $this->request->getPost('nama_user');
+            $email = $this->request->getPost('email');
+            $nomor_hp = $this->request->getPost('nomor_hp');
+            $provinsi = $this->request->getPost('provinsi');
+            $kabupaten = $this->request->getPost('kabupaten');
+            $kecamatan = $this->request->getPost('kecamatan');
+            $desa = $this->request->getPost('desa');
+            $alamat = $this->request->getPost('alamat');
+            $tanda_pengenal = $this->request->getFile('tanda_pengenal');
+            if ($tanda_pengenal->getName() != '') {
+                $tanda_pengenal_name = $id_user . "_" . date('YmdHis') . "_" . $tanda_pengenal->getRandomName();
+                $tanda_pengenal->move('upload/tanda_pengenal', $tanda_pengenal_name);
+                $data = [
+                    'id_user' => $id_user,
+                    'nomor_hp' => $nomor_hp,
+                    'provinsi' => $provinsi,
+                    'kabupaten' => $kabupaten,
+                    'kecamatan' => $kecamatan,
+                    'desa' => $desa,
+                    'alamat' => $alamat,
+                    'tanda_pengenal' => $tanda_pengenal_name,
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ];
+                $data_diri = new ModelDataDiri();
+                $check_data_diri = $data_diri->where('id_user', $id_user)->first();
+                if ($check_data_diri) {
+                    if (file_exists('upload/tanda_pengenal/' . $check_data_diri->tanda_pengenal)) {
+                        unlink('upload/tanda_pengenal/' . $check_data_diri->tanda_pengenal);
+                    }
+                    $update = $data_diri->update($check_data_diri->id_data_diri, $data);
+                } else {
+                    $data_diri->insert($data);
+                }
+
+                $session->set(['nama_user' => $nama_user, 'profil_status' => 'aktif']);
+                $user = new ModelUser();
+                $update = $user->update($id_user, ['nama_user' => $nama_user, 'profil_status' => 'aktif']);
+                $response = [
+                    'status' => 'success',
+                    'message' => 'profil berhasil diupdate',
+                ];
+            } else {
+                $response = [
+                    'status' => 'failed',
+                    'message' => 'foto tidak boleh kosong',
+                ];
+            }
+        }
+        return $this->respond($response, ResponseInterface::HTTP_OK);
+    }
+    // get data prinvisi
+    function location()
+    {
+        $jenis = $this->request->getPost('jenis');
+        $id_filter = $this->request->getPost('id_filter');
+        if ($jenis == 'prov') {
+            $prov = new ModelProvinsi();
+            $prov = $prov->findAll();
+            $response = [
+                'status' => 'success',
+                'message' => 'data berhasil diambil',
+                'data' => $prov,
+            ];
+        } elseif ($jenis == 'kab') {
+            $kab = new ModelKabupaten();
+            $kab = $kab->where('id_provinsi', $id_filter)->findAll();
+            $response = [
+                'status' => 'success',
+                'message' => 'data berhasil diambil',
+                'data' => $kab,
+            ];
+        } elseif ($jenis == 'kec') {
+            $kec = new ModelKecamatan();
+            $kec = $kec->where('id_kabupaten', $id_filter)->findAll();
+            $response = [
+                'status' => 'success',
+                'message' => 'data berhasil diambil',
+                'data' => $kec,
+            ];
+        } elseif ($jenis == 'des') {
+            $des = new ModelDesa();
+            $des = $des->where('id_kecamatan', $id_filter)->findAll();
+            $response = [
+                'status' => 'success',
+                'message' => 'data berhasil diambil',
+                'data' => $des,
+            ];
+        } else {
+            $response = [
+                'status' => 'failed',
+                'message' => 'jenis tidak ditemukan'
+            ];
+        }
+        return $this->respond($response, ResponseInterface::HTTP_OK);
     }
 }

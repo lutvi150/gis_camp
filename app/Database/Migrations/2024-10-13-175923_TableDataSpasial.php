@@ -4,12 +4,13 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class TableDataDiri extends Migration
+class TableDataSpasial extends Migration
 {
     public function up()
     {
+
         $this->forge->addField([
-            'id_data_diri' => [
+            'id_data_spasial' => [
                 'type' => 'INT',
                 'constraint' => 5,
                 'unsignned' => true,
@@ -19,33 +20,33 @@ class TableDataDiri extends Migration
                 'type' => 'int',
                 'constraint' => 5,
             ],
-            'nomor_hp' => [
+            'lat' => [
                 'type' => 'varchar',
-                'constraint' => 15,
-            ],
-            'alamat' => [
-                'type' => 'text',
                 'constraint' => 255,
             ],
-            'provinsi' => [
+            'long' => [
                 'type' => 'varchar',
-                'constraint' => 5,
+                'constraint' => 255,
             ],
-            'kabupaten' => [
+            'ketinggian' => [
                 'type' => 'varchar',
-                'constraint' => 5,
+                'constraint' => 255,
             ],
-            'kecamatan' => [
+            'kelembaban' => [
                 'type' => 'varchar',
-                'constraint' => 5,
+                'constraint' => 50,
             ],
-            'desa' => [
+            'kecepatan_angin' => [
                 'type' => 'varchar',
-                'constraint' => 5,
+                'constraint' => 50,
             ],
-            'tanda_pengenal' =>
-            [
-                'type' => 'text',
+            'luas_tempat' => [
+                'type' => 'varchar',
+                'constraint' => 255,
+            ],
+            'tekanan_udara' => [
+                'type' => 'varchar',
+                'constraint' => 255,
             ],
             'created_at' => [
                 'type' => 'datetime',
@@ -55,12 +56,12 @@ class TableDataDiri extends Migration
                 'null' => true,
             ],
         ]);
-        $this->forge->addKey('id_data_diri', true);
-        $this->forge->createTable(table: "table_data_diri");
+        $this->forge->addKey('id_data_spasial', true);
+        $this->forge->createTable(table: "table_data_spasial");
     }
 
     public function down()
     {
-        $this->forge->dropTable(table: "table_data_diri");
+        $this->forge->dropTable(table: "table_data_spasial");
     }
 }

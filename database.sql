@@ -24,16 +24,19 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `time` int(11) NOT NULL,
   `batch` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table camp.migrations: ~2 rows (approximately)
+-- Dumping data for table camp.migrations: ~4 rows (approximately)
 INSERT INTO `migrations` (`id`, `version`, `class`, `group`, `namespace`, `time`, `batch`) VALUES
 	(1, '2024-10-06-121331', 'App\\Database\\Migrations\\TableUser', 'default', 'App', 1728231920, 1),
-	(2, '2024-10-06-161046', 'App\\Database\\Migrations\\TableDataDiri', 'default', 'App', 1728231920, 1);
+	(2, '2024-10-06-161046', 'App\\Database\\Migrations\\TableDataDiri', 'default', 'App', 1728231920, 1),
+	(3, '2024-10-13-175524', 'App\\Database\\Migrations\\TableTempatCamping', 'default', 'App', 1728842539, 2),
+	(4, '2024-10-13-175923', 'App\\Database\\Migrations\\TableDataSpasial', 'default', 'App', 1728842539, 2);
 
 -- Dumping structure for table camp.table_data_diri
 CREATE TABLE IF NOT EXISTS `table_data_diri` (
   `id_data_diri` int(5) NOT NULL AUTO_INCREMENT,
+  `id_user` int(5) NOT NULL DEFAULT '0',
   `nomor_hp` varchar(15) NOT NULL,
   `alamat` text NOT NULL,
   `provinsi` varchar(5) NOT NULL,
@@ -44,9 +47,32 @@ CREATE TABLE IF NOT EXISTS `table_data_diri` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id_data_diri`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+
+-- Dumping data for table camp.table_data_diri: ~4 rows (approximately)
+INSERT INTO `table_data_diri` (`id_data_diri`, `id_user`, `nomor_hp`, `alamat`, `provinsi`, `kabupaten`, `kecamatan`, `desa`, `tanda_pengenal`, `created_at`, `updated_at`) VALUES
+	(2, 2, '082285498005', 'Jln. Lebe Kader No. 25', '11', '1104', '11040', '11040', '2_20241013163958_1728837598_c51982deb88d986ae05a.jpg', '2024-10-13 16:39:58', '2024-10-13 16:39:58'),
+	(3, 9, '082291345014', 'Takengon', '11', '1104', '11041', '11041', '9_20241013171412_1728839652_bf0beb8b539f6fd83ade.jpg', '2024-10-13 17:14:12', '2024-10-13 17:14:12'),
+	(4, 8, '082291345014', 'Takengon', '11', '1104', '11041', '11041', '8_20241013171554_1728839754_4ae9b5295cdb3c1b057a.jpg', '2024-10-13 17:15:54', '2024-10-13 17:15:54'),
+	(5, 7, '082291345014', 'Takengon', '11', '1104', '11041', '11041', '7_20241013172239_1728840159_5c24f5c547714d666e9d.jpg', '2024-10-13 17:22:39', '2024-10-13 17:22:39');
+
+-- Dumping structure for table camp.table_data_spasial
+CREATE TABLE IF NOT EXISTS `table_data_spasial` (
+  `id_data_spasial` int(5) NOT NULL AUTO_INCREMENT,
+  `id_user` int(5) NOT NULL,
+  `lat` varchar(255) NOT NULL,
+  `long` varchar(255) NOT NULL,
+  `ketinggian` varchar(255) NOT NULL,
+  `kelembaban` varchar(50) NOT NULL,
+  `kecepatan_angin` varchar(50) NOT NULL,
+  `luas_tempat` varchar(255) NOT NULL,
+  `tekanan_udara` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_data_spasial`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table camp.table_data_diri: ~0 rows (approximately)
+-- Dumping data for table camp.table_data_spasial: ~0 rows (approximately)
 
 -- Dumping structure for table camp.table_desa
 CREATE TABLE IF NOT EXISTS `table_desa` (
@@ -91693,27 +91719,50 @@ INSERT INTO `table_provinsi` (`id`, `name`) VALUES
 	('94', 'PAPUA TENGAH'),
 	('95', 'PAPUA PEGUNUNGAN');
 
+-- Dumping structure for table camp.table_tempat_camping
+CREATE TABLE IF NOT EXISTS `table_tempat_camping` (
+  `id_tempat_camping` int(5) NOT NULL AUTO_INCREMENT,
+  `id_user` int(5) NOT NULL,
+  `nama_tempat_camping` varchar(255) NOT NULL,
+  `nomor_hp` varchar(15) NOT NULL,
+  `alamat` text NOT NULL,
+  `provinsi` varchar(5) NOT NULL,
+  `kabupaten` varchar(5) NOT NULL,
+  `kecamatan` varchar(5) NOT NULL,
+  `desa` varchar(5) NOT NULL,
+  `foto_tempat` text NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_tempat_camping`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Dumping data for table camp.table_tempat_camping: ~0 rows (approximately)
+
 -- Dumping structure for table camp.table_user
 CREATE TABLE IF NOT EXISTS `table_user` (
   `id_user` int(5) NOT NULL AUTO_INCREMENT,
   `nama_user` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `profil_status` varchar(5) NOT NULL,
+  `profil_status` varchar(10) NOT NULL,
   `role` varchar(50) NOT NULL,
   `last_login` datetime NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table camp.table_user: ~4 rows (approximately)
+-- Dumping data for table camp.table_user: ~9 rows (approximately)
 INSERT INTO `table_user` (`id_user`, `nama_user`, `email`, `password`, `profil_status`, `role`, `last_login`, `created_at`, `updated_at`) VALUES
-	(1, 'Admin', 'admin@gmail.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', '', 'administrator', '2024-10-06 16:25:56', '2024-10-06 16:25:56', NULL),
-	(2, '-', 'lutvi1500@gmail.com', '9abc9eed93d80df0dccb5882ae9ec81358aee096013b07c80afcc094fcfe0c16', 'nonak', 'user', '2024-10-06 16:30:24', '2024-10-06 16:30:24', '2024-10-06 16:30:24'),
-	(3, '-', 'andi@gmail.com', '594bb117db50a9bab622b2a338029c5e9caebfb7e08450a33bd79a48d5d8f735', 'nonak', 'user', '2024-10-06 16:31:32', '2024-10-06 16:31:32', '2024-10-06 16:31:32'),
-	(4, '-', 'andi2@gmail.com', 'b164f56593ee5d64e37648e9184930f2517acff6aa67b7b527bdc7e9fd9b8209', 'nonak', 'user', '2024-10-06 16:31:41', '2024-10-06 16:31:41', '2024-10-06 16:31:41'),
-	(5, '-', 'andi3@gmail.com', '6ec6f29bc4cb4609069eb603b9f6f1d538a5c26046b4b4b0e1232d486c7b50e8', 'nonak', 'user', '2024-10-06 16:32:18', '2024-10-06 16:32:18', '2024-10-06 16:32:18');
+	(1, 'Admin', 'admin@gmail.com', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', '', 'administrator', '2024-10-06 16:25:56', '2024-10-06 16:25:56', NULL),
+	(2, '-', 'Soni@gmail.com', '9abc9eed93d80df0dccb5882ae9ec81358aee096013b07c80afcc094fcfe0c16', 'aktif', 'user', '2024-10-06 16:30:24', '2024-10-06 16:30:24', '2024-10-13 16:39:58'),
+	(3, '-', 'andi@gmail.com', '594bb117db50a9bab622b2a338029c5e9caebfb7e08450a33bd79a48d5d8f735', 'nonaktif', 'user', '2024-10-06 16:31:32', '2024-10-06 16:31:32', '2024-10-06 16:31:32'),
+	(4, '-', 'andi2@gmail.com', 'b164f56593ee5d64e37648e9184930f2517acff6aa67b7b527bdc7e9fd9b8209', 'nonaktif', 'user', '2024-10-06 16:31:41', '2024-10-06 16:31:41', '2024-10-06 16:31:41'),
+	(5, '-', 'andi3@gmail.com', '6ec6f29bc4cb4609069eb603b9f6f1d538a5c26046b4b4b0e1232d486c7b50e8', 'nonaktif', 'user', '2024-10-06 16:32:18', '2024-10-06 16:32:18', '2024-10-06 16:32:18'),
+	(6, '-', 'budi@gmail.com', '48b02c9e85f934696778e9d1e84e697ca1ea6de02e07fc13173c1f1e98bbc60c', 'nonaktif', 'user', '2024-10-13 13:42:58', '2024-10-13 13:42:58', '2024-10-13 13:42:58'),
+	(7, 'Camping Manja', 'campingmanja@gmail.com', 'a461b4551b5dd87c5806f32db63d21b274a9ae4894a1c4ddfba1ca13be234775', 'aktif', 'owner', '2024-10-13 17:11:18', '2024-10-13 17:11:18', '2024-10-13 17:22:40'),
+	(8, 'Camping Ground Takengon', 'campinggroundtakengon@gmail.com', 'de96e28e806efa06b9bc3690a2e6ea31cba5e6cca7822cc3bb885d2fd3094010', 'aktif', 'owner', '2024-10-13 17:12:01', '2024-10-13 17:12:01', '2024-10-13 17:15:54'),
+	(9, 'Kelaping Camping', 'kelapingcamping@gmail.com', '2f1009ab61735909b4c0528480cd20c210d3c0dfd2e735856e4b4650daedcc54', 'aktif', 'owner', '2024-10-13 17:12:43', '2024-10-13 17:12:43', '2024-10-13 17:14:12');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

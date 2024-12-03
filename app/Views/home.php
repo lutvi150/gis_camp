@@ -29,6 +29,7 @@
 
     <!-- Template Stylesheet -->
     <link href="<?= base_url() ?>theme/1/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="<?= base_url() ?>assets/notiflix/dist/notiflix-3.2.7.min.css">
 </head>
 
 <body>
@@ -56,12 +57,25 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="index.html" class="nav-item nav-link active">Home</a>
-                        <a href="about.html" class="nav-item nav-link">Tentang</a>
-                        <a href="contact.html" class="nav-item nav-link">Cari Di Map</a>
-                        <a href="contact.html" class="nav-item nav-link">Kontak</a>
+                        <a href="<?= base_url() ?>" class="nav-item nav-link active">Home</a>
+                        <a href="#" class="nav-item nav-link" onclick="show_load();">Tentang</a>
+                        <a href="#" class="nav-item nav-link" onclick="show_load();">Cari Di Map</a>
+                        <a href="#" class="nav-item nav-link" onclick="show_load();">Kontak</a>
                     </div>
-                    <a href="" class="btn btn-primary px-3 d-none d-lg-flex">Login</a>
+                    <?php if (session('login') == true): ?>
+                        <?php if (session('role') == 'administrator') {
+                            $url = 'index.php/administrator';
+                        } elseif (session('role') == 'user') {
+                            $url = 'index.php/user';
+                        } else {
+                            $url = 'index.php/owner';
+                        } ?>
+                        <a href="<?= base_url($url) ?>" class="btn btn-primary px-3 d-none d-lg-flex"><?= session('nama_user') ?></a>
+                        <a href="<?= base_url('index.php/logout') ?>" class="btn btn-primary m-3 px-3 d-none d-lg-flex">Logout</a>
+
+                    <?php else: ?>
+                        <a href="<?= base_url('login') ?>" class="btn btn-primary px-3 d-none d-lg-flex">Login</a>
+                    <?php endif; ?>
                 </div>
             </nav>
         </div>
@@ -75,7 +89,7 @@
                 <h1 class="display-5 animated fadeIn mb-4">Ingin Berwisata <span class="text-primary">Camping</span> di Takengon</h1>
                 <p class="animated fadeIn mb-4 pb-2">Vero elitr justo clita lorem. Ipsum dolor at sed stet
                     Wisata Camping di tempat nyaman bersih dan berada di pinggir danau Lur Tawar adalah salah satu cara untuk menikmati liburan anda dengan nyaman</p>
-                <a href="" class="btn btn-primary py-3 px-5 me-3 animated fadeIn">Pesan</a>
+                <a href="<?= base_url('login') ?>" class="btn btn-primary py-3 px-5 me-3 animated fadeIn">Pesan</a>
             </div>
             <div class="col-md-6 animated fadeIn">
                 <div class="owl-carousel header-carousel">
@@ -166,7 +180,7 @@
                                         <p><i class="fa fa-map-marker-alt text-primary me-2"></i><?= $value->lokasi ?></p>
                                     </div>
                                     <div class="border-top text-center">
-                                        <button class="btn btn-primary rounded-pill py-2 me-3"><i class="fa fa-phone-alt me-2"></i>Pesan</button>
+                                        <button type="button" onclick="show_load();" class="btn btn-primary rounded-pill py-2 me-3"><i class="fa fa-phone-alt me-2"></i>Pesan</button>
                                     </div>
                                 </div>
                             </div>
@@ -500,6 +514,12 @@
 
     <!-- Template Javascript -->
     <script src="<?= base_url() ?>theme/1/js/main.js"></script>
+    <script src="<?= base_url() ?>assets/notiflix/dist/notiflix-3.2.7.min.js"></script>
+    <script>
+        show_load = () => {
+            Notiflix.Loading.hourglass();
+        }
+    </script>
 </body>
 
 </html>

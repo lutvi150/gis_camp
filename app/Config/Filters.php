@@ -2,6 +2,10 @@
 
 namespace Config;
 
+use App\Filters\AuthAdministrator;
+use App\Filters\AuthDataDiri;
+use App\Filters\AuthOwner;
+use App\Filters\AuthUser;
 use CodeIgniter\Config\Filters as BaseFilters;
 use CodeIgniter\Filters\Cors;
 use CodeIgniter\Filters\CSRF;
@@ -34,6 +38,11 @@ class Filters extends BaseFilters
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
+        // costumer filter
+        'administrator' => AuthAdministrator::class,
+        'user' => AuthUser::class,
+        'owner' => AuthOwner::class,
+        'profil' => AuthDataDiri::class,
     ];
 
     /**

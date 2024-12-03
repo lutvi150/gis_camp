@@ -4,12 +4,12 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class TableDataDiri extends Migration
+class TableTempatCamping extends Migration
 {
     public function up()
     {
         $this->forge->addField([
-            'id_data_diri' => [
+            'id_tempat_camping' => [
                 'type' => 'INT',
                 'constraint' => 5,
                 'unsignned' => true,
@@ -18,6 +18,10 @@ class TableDataDiri extends Migration
             'id_user' => [
                 'type' => 'int',
                 'constraint' => 5,
+            ],
+            'nama_tempat_camping' => [
+                'type' => 'varchar',
+                'constraint' => 255,
             ],
             'nomor_hp' => [
                 'type' => 'varchar',
@@ -43,7 +47,7 @@ class TableDataDiri extends Migration
                 'type' => 'varchar',
                 'constraint' => 5,
             ],
-            'tanda_pengenal' =>
+            'foto_tempat' =>
             [
                 'type' => 'text',
             ],
@@ -55,12 +59,12 @@ class TableDataDiri extends Migration
                 'null' => true,
             ],
         ]);
-        $this->forge->addKey('id_data_diri', true);
-        $this->forge->createTable(table: "table_data_diri");
+        $this->forge->addKey('id_tempat_camping', true);
+        $this->forge->createTable(table: "table_tempat_camping");
     }
 
     public function down()
     {
-        $this->forge->dropTable(table: "table_data_diri");
+        $this->forge->dropTable(table: "table_tempat_camping");
     }
 }

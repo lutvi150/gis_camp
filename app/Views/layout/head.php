@@ -11,7 +11,7 @@
 
     <title><?= $title . " " . getenv('app_name') ?></title>
     <!-- favicon -->
-    <link rel="stylesheet" href="<?= base_url('upload/favicon.ico') ?>">
+    <link rel="shortcut icon" href="<?= base_url('upload/favicon.ico') ?>" type="image/x-icon">
     <!-- Custom fonts for this template-->
     <link href="<?= base_url() ?>theme/2/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -20,5 +20,7 @@
 
     <!-- Custom styles for this template-->
     <link href="<?= base_url() ?>theme/2/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="<?= base_url() ?>theme/2/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="<?= base_url() ?>assets/notiflix/dist/notiflix-3.2.7.min.css">
 
 </head>

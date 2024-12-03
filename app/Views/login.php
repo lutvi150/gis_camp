@@ -51,7 +51,7 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Selamat Datang</h1>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" id="form-login">
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
                                                 id="email" name="email" aria-describedby="emailHelp"
@@ -102,6 +102,13 @@
     <script src="<?= base_url() ?>assets/form-master/dist/jquery.form.min.js"></script>
     <script src="<?= base_url() ?>assets/notiflix/dist/notiflix-3.2.7.min.js"></script>
     <script>
+        var wage = document.getElementById("form-login");
+        wage.addEventListener("keydown", function(e) {
+            if (e.code === "Enter") {
+                login();
+            }
+        });
+
         let url = "<?= base_url() ?>"
         login = () => {
             $(".text-danger").text('');
@@ -122,8 +129,8 @@
                         });
                     } else if (response.status == 'success') {
                         Notiflix.Report.success(
-                            'Notiflix Confirm',
-                            'Do you agree with me?',
+                            'Konfirmasi',
+                            'Login berhasil, lanjutkan ke dashboard ?',
                             'Ok',
                             function cb() {
                                 window.location.reload();

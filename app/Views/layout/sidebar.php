@@ -50,6 +50,11 @@
                  <i class="fas fa-fw fa-table"></i>
                  <span>Pesanan Masuk</span></a>
          </li>
+         <li class="nav-item">
+             <a class="nav-link" href="<?= base_url('index.php/admin/produk') ?>">
+                 <i class="fas fa-fw fa-table"></i>
+                 <span>Produk</span></a>
+         </li>
      <?php elseif ($session->get('role') == 'user'): ?>
          <li class="nav-item">
              <a class="nav-link" href="<?= base_url('index.php/user/transaksi') ?>">

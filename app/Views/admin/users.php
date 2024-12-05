@@ -53,6 +53,9 @@
                                         <button type="button" class="btn btn-sm btn-success"><i class="fa fa-eye"></i></button>
                                     <?php endif; ?>
                                     <button type="button" onclick="reset_password(<?= $value->id_user ?>)" class="btn btn-sm btn-info"><i class="fa fa-key"></i>Reset Password</button>
+                                    <?php if ($value->role == 'owner'): ?>
+                                        <a href="<?= base_url('admin/tempat/profil/' . $value->id_user) ?>" class="btn btn-success btn-sm">Profil Tempat</a>
+                                    <?php endif; ?>
 
                                 </td>
                             </tr>

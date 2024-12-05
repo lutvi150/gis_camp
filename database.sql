@@ -24,14 +24,17 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `time` int(11) NOT NULL,
   `batch` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table camp.migrations: ~4 rows (approximately)
+-- Dumping data for table camp.migrations: ~7 rows (approximately)
 INSERT INTO `migrations` (`id`, `version`, `class`, `group`, `namespace`, `time`, `batch`) VALUES
 	(1, '2024-10-06-121331', 'App\\Database\\Migrations\\TableUser', 'default', 'App', 1728231920, 1),
 	(2, '2024-10-06-161046', 'App\\Database\\Migrations\\TableDataDiri', 'default', 'App', 1728231920, 1),
 	(3, '2024-10-13-175524', 'App\\Database\\Migrations\\TableTempatCamping', 'default', 'App', 1728842539, 2),
-	(4, '2024-10-13-175923', 'App\\Database\\Migrations\\TableDataSpasial', 'default', 'App', 1728842539, 2);
+	(4, '2024-10-13-175923', 'App\\Database\\Migrations\\TableDataSpasial', 'default', 'App', 1728842539, 2),
+	(5, '2024-12-04-154055', 'App\\Database\\Migrations\\TableFoto', 'default', 'App', 1733327027, 3),
+	(6, '2024-12-04-225423', 'App\\Database\\Migrations\\TableProduk', 'default', 'App', 1733353602, 4),
+	(7, '2024-12-04-234651', 'App\\Database\\Migrations\\TableProfilTempat', 'default', 'App', 1733357983, 5);
 
 -- Dumping structure for table camp.table_data_diri
 CREATE TABLE IF NOT EXISTS `table_data_diri` (
@@ -47,14 +50,15 @@ CREATE TABLE IF NOT EXISTS `table_data_diri` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id_data_diri`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 -- Dumping data for table camp.table_data_diri: ~4 rows (approximately)
 INSERT INTO `table_data_diri` (`id_data_diri`, `id_user`, `nomor_hp`, `alamat`, `provinsi`, `kabupaten`, `kecamatan`, `desa`, `tanda_pengenal`, `created_at`, `updated_at`) VALUES
 	(2, 2, '082285498005', 'Jln. Lebe Kader No. 25', '11', '1104', '11040', '11040', '2_20241013163958_1728837598_c51982deb88d986ae05a.jpg', '2024-10-13 16:39:58', '2024-10-13 16:39:58'),
 	(3, 9, '082291345014', 'Takengon', '11', '1104', '11041', '11041', '9_20241013171412_1728839652_bf0beb8b539f6fd83ade.jpg', '2024-10-13 17:14:12', '2024-10-13 17:14:12'),
 	(4, 8, '082291345014', 'Takengon', '11', '1104', '11041', '11041', '8_20241013171554_1728839754_4ae9b5295cdb3c1b057a.jpg', '2024-10-13 17:15:54', '2024-10-13 17:15:54'),
-	(5, 7, '082291345014', 'Takengon', '11', '1104', '11041', '11041', '7_20241013172239_1728840159_5c24f5c547714d666e9d.jpg', '2024-10-13 17:22:39', '2024-10-13 17:22:39');
+	(5, 7, '082291345014', 'Takengon', '11', '1104', '11041', '11041', '7_20241013172239_1728840159_5c24f5c547714d666e9d.jpg', '2024-10-13 17:22:39', '2024-10-13 17:22:39'),
+	(6, 10, '082285498005', 'Bakongan', '11', '1101', '11010', '11010', '10_20241205005652_1733360212_07e02e745ef61ed84991.jpg', '2024-12-05 00:56:53', '2024-12-05 00:56:52');
 
 -- Dumping structure for table camp.table_data_spasial
 CREATE TABLE IF NOT EXISTS `table_data_spasial` (
@@ -83856,6 +83860,28 @@ INSERT INTO `table_desa` (`id`, `id_kecamatan`, `name`) VALUES
 	('9508322003', '950832', 'Benggem'),
 	('9508322004', '950832', 'Pasir Putih');
 
+-- Dumping structure for table camp.table_foto
+CREATE TABLE IF NOT EXISTS `table_foto` (
+  `id_foto` int(5) NOT NULL AUTO_INCREMENT,
+  `jenis` varchar(50) NOT NULL,
+  `foto` text NOT NULL,
+  `created_at` datetime NOT NULL,
+  PRIMARY KEY (`id_foto`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+
+-- Dumping data for table camp.table_foto: ~10 rows (approximately)
+INSERT INTO `table_foto` (`id_foto`, `jenis`, `foto`, `created_at`) VALUES
+	(1, 'foto_produk', '241204112051_1733354451_cc7e887db7b492d3ca5b.jpg', '2024-12-04 23:20:51'),
+	(2, 'foto_produk', '241204112331_1733354611_d05ec93e0ce52218a083.jpg', '2024-12-04 23:23:31'),
+	(3, 'foto_produk', '241204112421_1733354661_8fa940ffe34f4ed56216.jpg', '2024-12-04 23:24:21'),
+	(4, 'foto_produk', '241204113053_1733355053_48949f85267c92bc11a2.jpg', '2024-12-04 23:30:53'),
+	(5, 'foto_produk', '241204113151_1733355111_5d0aca293fd55b0e30bf.jpg', '2024-12-04 23:31:51'),
+	(6, 'foto_produk', '241204113310_1733355190_4244db7e6a119a3cd55c.jpg', '2024-12-04 23:33:10'),
+	(7, 'foto_produk', '241204113356_1733355236_7aa2ca21e133ac61192f.jpg', '2024-12-04 23:33:56'),
+	(8, 'foto_produk', '241204113428_1733355268_a4b83b160baec6c42766.jpg', '2024-12-04 23:34:28'),
+	(9, 'foto_produk', '241204113459_1733355299_5b2fb1abe225e04f15c0.jpg', '2024-12-04 23:34:59'),
+	(10, 'foto_produk', '241204113613_1733355373_53c9fbf98be5248c5e95.png', '2024-12-04 23:36:13');
+
 -- Dumping structure for table camp.table_kabupaten
 CREATE TABLE IF NOT EXISTS `table_kabupaten` (
   `id` char(4) NOT NULL,
@@ -91672,6 +91698,51 @@ INSERT INTO `table_kecamatan` (`id`, `id_kabupaten`, `name`) VALUES
 	('950831', '9508', 'Krepkuri'),
 	('950832', '9508', 'Pasir Putih');
 
+-- Dumping structure for table camp.table_produk
+CREATE TABLE IF NOT EXISTS `table_produk` (
+  `id_produk` int(5) NOT NULL AUTO_INCREMENT,
+  `nama_produk` varchar(50) NOT NULL,
+  `jenis` text NOT NULL,
+  `harga` int(20) NOT NULL,
+  `deskripsi` text NOT NULL,
+  `id_foto` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `terjual` int(11) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id_produk`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+
+-- Dumping data for table camp.table_produk: ~7 rows (approximately)
+INSERT INTO `table_produk` (`id_produk`, `nama_produk`, `jenis`, `harga`, `deskripsi`, `id_foto`, `id_user`, `terjual`, `created_at`, `updated_at`) VALUES
+	(1, 'Paket Spesial 4 Orang', '1', 300000, '', 1, 7, 0, '2024-12-04 23:20:52', '0000-00-00 00:00:00'),
+	(2, 'Paket Sahabat 4 orang', '1', 385000, '', 2, 7, 0, '2024-12-04 23:23:31', '0000-00-00 00:00:00'),
+	(3, 'Paket Piknik Asyik 4 orang', '1', 185000, '', 3, 7, 0, '2024-12-04 23:24:21', '0000-00-00 00:00:00'),
+	(4, 'Tenda', '2', 85000, 'Tenda camping', 7, 7, 0, '2024-12-04 23:33:56', '0000-00-00 00:00:00'),
+	(5, 'Tike masuk', '2', 25000, 'Tiket masuk camping', 8, 7, 0, '2024-12-04 23:34:28', '0000-00-00 00:00:00'),
+	(6, 'Kayu Bakar', '2', 50000, 'Kayu Bakar', 9, 7, 0, '2024-12-04 23:34:59', '0000-00-00 00:00:00'),
+	(7, 'Makan Malam', '2', 20000, 'Makan malam, harga per porsi', 10, 7, 0, '2024-12-04 23:36:13', '0000-00-00 00:00:00');
+
+-- Dumping structure for table camp.table_profil_tempat
+CREATE TABLE IF NOT EXISTS `table_profil_tempat` (
+  `id_tempat` int(5) NOT NULL AUTO_INCREMENT,
+  `id_user` int(11) NOT NULL,
+  `nama_tempat` text NOT NULL,
+  `foto` text NOT NULL,
+  `profil_status` varchar(5) NOT NULL,
+  `jarak` varchar(50) NOT NULL,
+  `lokasi` text NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_tempat`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+-- Dumping data for table camp.table_profil_tempat: ~3 rows (approximately)
+INSERT INTO `table_profil_tempat` (`id_tempat`, `id_user`, `nama_tempat`, `foto`, `profil_status`, `jarak`, `lokasi`, `created_at`, `updated_at`) VALUES
+	(1, 7, 'Camping Manja', 'upload/owl/1.jpg', '-', '10', 'JWJR+7Q2, Kelitu, Kec. Bintang, Kabupaten Aceh Tengah, Aceh', '2024-12-05 07:21:12', NULL),
+	(2, 8, 'Kelaping Camping', 'upload/owl/2.jpg', '-', '20', 'JWJR+7Q2, Kelitu, Kec. Bintang, Kabupaten Aceh Tengah, Aceh', '2024-12-05 07:21:44', NULL),
+	(3, 9, 'Camping Ground Takengon', 'upload/owl/3.jpg', '-', '30', 'JWJR+7Q2, Kelitu, Kec. Bintang, Kabupaten Aceh Tengah, Aceh', '2024-12-05 07:22:35', NULL);
+
 -- Dumping structure for table camp.table_provinsi
 CREATE TABLE IF NOT EXISTS `table_provinsi` (
   `id` char(2) NOT NULL,
@@ -91750,9 +91821,9 @@ CREATE TABLE IF NOT EXISTS `table_user` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table camp.table_user: ~9 rows (approximately)
+-- Dumping data for table camp.table_user: ~8 rows (approximately)
 INSERT INTO `table_user` (`id_user`, `nama_user`, `email`, `password`, `profil_status`, `role`, `last_login`, `created_at`, `updated_at`) VALUES
 	(1, 'Admin', 'admin@gmail.com', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', '', 'administrator', '2024-10-06 16:25:56', '2024-10-06 16:25:56', NULL),
 	(2, '-', 'Soni@gmail.com', '9abc9eed93d80df0dccb5882ae9ec81358aee096013b07c80afcc094fcfe0c16', 'aktif', 'user', '2024-10-06 16:30:24', '2024-10-06 16:30:24', '2024-10-13 16:39:58'),
@@ -91762,7 +91833,8 @@ INSERT INTO `table_user` (`id_user`, `nama_user`, `email`, `password`, `profil_s
 	(6, '-', 'budi@gmail.com', '48b02c9e85f934696778e9d1e84e697ca1ea6de02e07fc13173c1f1e98bbc60c', 'nonaktif', 'user', '2024-10-13 13:42:58', '2024-10-13 13:42:58', '2024-10-13 13:42:58'),
 	(7, 'Camping Manja', 'campingmanja@gmail.com', 'a461b4551b5dd87c5806f32db63d21b274a9ae4894a1c4ddfba1ca13be234775', 'aktif', 'owner', '2024-10-13 17:11:18', '2024-10-13 17:11:18', '2024-10-13 17:22:40'),
 	(8, 'Camping Ground Takengon', 'campinggroundtakengon@gmail.com', 'de96e28e806efa06b9bc3690a2e6ea31cba5e6cca7822cc3bb885d2fd3094010', 'aktif', 'owner', '2024-10-13 17:12:01', '2024-10-13 17:12:01', '2024-10-13 17:15:54'),
-	(9, 'Kelaping Camping', 'kelapingcamping@gmail.com', '2f1009ab61735909b4c0528480cd20c210d3c0dfd2e735856e4b4650daedcc54', 'aktif', 'owner', '2024-10-13 17:12:43', '2024-10-13 17:12:43', '2024-10-13 17:14:12');
+	(9, 'Kelaping Camping', 'kelapingcamping@gmail.com', '2f1009ab61735909b4c0528480cd20c210d3c0dfd2e735856e4b4650daedcc54', 'aktif', 'owner', '2024-10-13 17:12:43', '2024-10-13 17:12:43', '2024-10-13 17:14:12'),
+	(10, 'Budy', 'budy@gmail.com', '4d437a479639dfaa48d322262142677e39b11f577f969e29e43158f653bef12f', 'aktif', 'user', '2024-12-05 00:56:12', '2024-12-05 00:56:12', '2024-12-05 00:56:53');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

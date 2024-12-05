@@ -6,8 +6,10 @@ use App\Models\ModelDataDiri;
 use App\Models\ModelDesa;
 use App\Models\ModelKabupaten;
 use App\Models\ModelKecamatan;
+use App\Models\ModelProduk;
 use App\Models\ModelProvinsi;
 use App\Models\ModelUser;
+use App\Models\ProfilTempat;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Session\Session as SessionSession;
@@ -169,6 +171,7 @@ class Home extends BaseController
     }
     function home()
     {
+        $data['title'] = 'Home';
         $data['owl'] = [
             'upload/owl/5.jpg',
             'upload/owl/4.jpg'
@@ -195,30 +198,22 @@ class Home extends BaseController
                 'testimoni' => 'Udaranya sangat indah. Tidak terlalu ramai, harga yang terjangkau, fasilitas yang lengkap.'
             ]
         ];
-        $data['camping'] = (object)[
-            (object)[
-                'nama_camping' => 'Camping Manja',
-                'jarak' => '10 Km',
-                'harga' => 'Rp 100.000,-',
-                'foto' => 'upload/owl/1.jpg',
-                'lokasi' => 'JWJR+7Q2, Kelitu, Kec. Bintang, Kabupaten Aceh Tengah, Aceh'
-            ],
-            (object)[
-                'nama_camping' => 'Kelaping Camping',
-                'jarak' => '20 Km',
-                'harga' => 'Rp 150.000,-',
-                'foto' => 'upload/owl/2.jpg',
-                'lokasi' => 'JWJR+7Q2, Kelitu, Kec. Bintang, Kabupaten Aceh Tengah, Aceh'
-            ],
-            (object)[
-                'nama_camping' => 'Camping Ground Takengon',
-                'jarak' => '30 Km',
-                'harga' => 'Rp 200.000,-',
-                'foto' => 'upload/owl/3.jpg',
-                'lokasi' => 'JWJR+7Q2, Kelitu, Kec. Bintang, Kabupaten Aceh Tengah, Aceh'
-            ]
+        $profil_tempat = new ProfilTempat();
+        $data['camping'] = $profil_tempat->get()->getResult();
+        return view('home/home', $data);
+    }
+    function detail($id_camping)
+    {
+        $profil = new ProfilTempat();
+        $data_profil = $profil->where('id_user', $id_camping)->first();
+        $data['title'] = $data_profil->nama_tempat;
+        $data['owl'] = [
+            'upload/owl/5.jpg',
+            'upload/owl/4.jpg'
         ];
-        return view('home', $data);
+        $produk = new ModelProduk();
+        $data['camping'] = $produk->select('table_produk.*,table_foto.foto')->join('table_foto', 'table_foto.id_foto = table_produk.id_foto')->where('id_user', $id_camping)->findAll();
+        return view('home/home_detail', $data);
     }
     // use for update profil
     function update_profil()

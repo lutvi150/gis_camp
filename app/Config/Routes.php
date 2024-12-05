@@ -11,7 +11,8 @@ $routes->post('login', 'Home::login_process');
 $routes->get('register', 'Home::register');
 $routes->post('register', 'Home::register_process');
 $routes->get('logout', 'Home::logout');
-
+// transaksi
+$routes->get('detail/(:num)', 'Home::detail/$1');
 // use for admin
 $routes->group('admin', ['filter' => 'administrator'], function ($routes) {
     $routes->get('/', 'Admin::index');
@@ -19,6 +20,13 @@ $routes->group('admin', ['filter' => 'administrator'], function ($routes) {
     $routes->get('users/add', 'Admin::add_user');
     $routes->post('users/add', 'Admin::add_user_process');
     $routes->get('users/edit/(:num)', 'Admin::edit_user/$1');
+    // produk
+    $routes->get('produk', 'Produk::index');
+    $routes->get('produk/add', 'Produk::add');
+    $routes->post('produk/add', 'Produk::add_process');
+    $routes->get('produk/edit/(:num)', 'Produk::edit/$1');
+    $routes->post('produk/edit/(:num)', 'Produk::edit_process/$1');
+    $routes->get('produk/delete/(:num)', 'Produk::delete/$1');
     // reset password
     $routes->post('user-reset-password', 'Admin::user_reset_password');
 });
@@ -44,3 +52,5 @@ $routes->get('update-profil', 'Home::update_profil');
 $routes->post('update-profil', 'Home::update_profil_process');
 // get location
 $routes->post('location', 'Home::location');
+// use for tes 
+$routes->get('tes', 'Produk::add_process');

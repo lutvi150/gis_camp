@@ -23,6 +23,10 @@ class TableKeranjang extends Migration
                 'type' => 'int',
                 'constraint' => 11,
             ],
+            'id_transaksi' => [
+                'type' => 'varchar',
+                'constraint' => 11,
+            ],
             'jumlah' => [
                 'type' => 'int',
                 'constraint' => 11,

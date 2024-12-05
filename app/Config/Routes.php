@@ -34,6 +34,7 @@ $routes->group('admin', ['filter' => 'administrator'], function ($routes) {
 $routes->group('user', ['filter' => ['user', 'profil']], function ($routes) {
     $routes->get('/', 'User::index');
     $routes->get('profile', 'User::profile_update');
+    $routes->post('keranjang/add', 'Keranjang::keranjang_process');
 });
 // use for owner camp
 $routes->group('owner', ['filter' => 'owner'], function ($routes) {

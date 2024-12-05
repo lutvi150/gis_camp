@@ -186,10 +186,12 @@
     <script src="<?= base_url() ?>theme/1/js/main.js"></script>
     <script src="<?= base_url() ?>assets/notiflix/dist/notiflix-3.2.7.min.js"></script>
     <script>
+        let base_url = "<?= base_url('index.php/') ?>";
         show_load = () => {
             Notiflix.Loading.hourglass();
         }
     </script>
+    <?= $this->renderSection('script') ?>
 </body>
 
 </html>

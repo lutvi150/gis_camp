@@ -66,27 +66,25 @@
 <?= $this->endSection() ?>
 <?= $this->section('script') ?>
 <script>
+    check_keranjang = () => {
+        
+    }
     keranjang = (id) => {
         Notiflix.Loading.hourglass();
         $.ajax({
             type: "POST",
-            url: base_url + "url",
-            data: "data",
+            url: base_url + "user/keranjang/add",
+            data: {
+                id_produk: id
+            },
             dataType: "JSON",
             success: function(response) {
                 Notiflix.Loading.remove();
-                if (response.status == 'validation_failed') {
-                    $.each(response.message, function(index, array) {
-                        $(".e-" + index).text(array);
-                    });
-                } else if (response.status == 'success') {
+                if (response.status == 'success') {
                     Notiflix.Report.success(
                         'Konfirmasi',
                         'Login berhasil, lanjutkan ke dashboard ?',
                         'Ok',
-                        function cb() {
-                            $("#form-produk").trigger("reset");
-                        },
                     );
                 } else {
                     Notiflix.Report.failure(

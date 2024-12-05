@@ -85,7 +85,7 @@ class Produk extends BaseController
             if ($session->get('role') == 'administrator') {
                 $id_user = $this->request->getPost('tempat_camping');
             } else {
-                $id_user = $session->get('id_user');
+                $id_user = $session->get('id');
             }
             $data = [
                 'nama_produk' => $this->request->getPost('nama_produk'),

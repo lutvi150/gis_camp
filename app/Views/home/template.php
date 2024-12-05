@@ -1,4 +1,11 @@
 <?= $this->include('home/head') ?>
+<style>
+    .sup {
+        font-size: 0.6em;
+        vertical-align: super;
+        margin-left: 4px;
+    }
+</style>
 
 <body>
     <div class="container-xxl bg-white p-0">
@@ -30,7 +37,7 @@
                         <a href="#" class="nav-item nav-link" onclick="show_load();">Cari Di Map</a>
                         <a href="#" class="nav-item nav-link" onclick="show_load();">Kontak</a>
                     </div>
-                    <a id="keranjang" href="<?= base_url('index.php/cart') ?>" class="btn btn-primary px-3 d-none d-lg-flex m-3">Keranjang</a>
+                    <a id="keranjang" href="<?= base_url('index.php/cart') ?>" class="btn btn-primary px-3 d-none d-lg-flex m-3">Keranjang </a>
                     <?php if (session('login') == true): ?>
                         <?php if (session('role') == 'administrator') {
                             $url = 'index.php/administrator';

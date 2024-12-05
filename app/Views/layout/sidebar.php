@@ -61,6 +61,11 @@
                  <i class="fas fa-fw fa-book"></i>
                  <span>Pesanan</span></a>
          </li>
+         <li class="nav-item">
+             <a class="nav-link" href="<?= base_url('index.php/user/cart') ?>">
+                 <i class="fas fa-fw fa-cart-plus"></i>
+                 <span>Keranjang</span></a>
+         </li>
      <?php elseif ($session->get('role') == 'owner'): ?>
          <li class="nav-item">
              <a class="nav-link" href="<?= base_url('index.php/owner/') ?>">

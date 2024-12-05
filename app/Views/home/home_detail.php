@@ -66,8 +66,42 @@
 <?= $this->endSection() ?>
 <?= $this->section('script') ?>
 <script>
+    $(document).ready(function() {
+        check_keranjang();
+    });
     check_keranjang = () => {
-        
+        Notiflix.Loading.hourglass();
+        $.ajax({
+            type: "GET",
+            url: base_url + "user/keranjang/get",
+            dataType: "JSON",
+            success: function(response) {
+                Notiflix.Loading.remove();
+                if (response.status == 'success') {
+                    if (response.data.count == 0) {
+
+                    } else {
+                        $("#keranjang").removeClass('btn-primary').addClass('btn-danger').html(`keranjang  <span class="sup">${response.data.count}</span>`)
+                    }
+
+                } else {
+                    Notiflix.Report.failure(
+                        'Notiflix Failure',
+                        `${response.message}`,
+                        'Okay',
+                    );
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText);
+                Notiflix.Loading.remove();
+                Notiflix.Report.failure(
+                    'Error',
+                    `${xhr.responseJSON.message}`,
+                    'Okay',
+                );
+            }
+        });
     }
     keranjang = (id) => {
         Notiflix.Loading.hourglass();
@@ -81,9 +115,10 @@
             success: function(response) {
                 Notiflix.Loading.remove();
                 if (response.status == 'success') {
+                    $("#keranjang").removeClass('btn-primary').addClass('btn-danger').html(`keranjang  <span class="sup">${response.data.count}</span>`)
                     Notiflix.Report.success(
-                        'Konfirmasi',
-                        'Login berhasil, lanjutkan ke dashboard ?',
+                        'Berhasil',
+                        'silahkan lanjut pesan',
                         'Ok',
                     );
                 } else {

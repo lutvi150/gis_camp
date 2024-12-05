@@ -9,8 +9,7 @@
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="<?= base_url() ?>theme/1/img/favicon.ico" rel="icon">
-
+    <link rel="shortcut icon" href="<?= base_url('upload/favicon.ico') ?>" type="image/x-icon">
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,4 +29,5 @@
     <!-- Template Stylesheet -->
     <link href="<?= base_url() ?>theme/1/css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="<?= base_url() ?>assets/notiflix/dist/notiflix-3.2.7.min.css">
+
 </head>

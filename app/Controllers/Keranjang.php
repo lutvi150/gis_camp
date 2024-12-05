@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\ModelKeranjang;
 use App\Models\ModelProduk;
 use CodeIgniter\HTTP\ResponseInterface;
 
@@ -24,9 +25,41 @@ class Keranjang extends BaseController
             'total_harga' => $get_produk->harga,
             'created_at' => date('Y-m-d H:i:s'),
         ];
-        return $this->response->setJSON($insert, ResponseInterface::HTTP_OK,);
+        $keranjang = new ModelKeranjang();
+        $check_keranjang = $keranjang->where(['id_user' => $id_user, 'id_produk' => $id_produk])->first();
+        if ($check_keranjang) {
+            $jumlah = $check_keranjang->jumlah + 1;
+            $total_harga = $jumlah * $get_produk->harga;
+            $update = [
+                'jumlah' => $jumlah,
+                'total_harga' => $total_harga,
+                'updated_at' => date('Y-m-d H:i:s'),
+            ];
+            $keranjang->update($check_keranjang->id_keranjang, $update);
+        } else {
+            $keranjang->insert($insert);
+        }
+        $response = [
+            'status' => 'success',
+            'data' => [
+                'count' => $keranjang->where(['id_user' => $id_user])->countAllResults(),
+            ]
+        ];
+        return $this->response->setJSON($response, ResponseInterface::HTTP_OK,);
     }
-    function check_keranjanga_user() : Returntype {
-        
+    function check_keranjang_user()
+    {
+        $session = \Config\Services::session();
+        $id_user = $session->get('id');
+        $keranjang = new ModelKeranjang();
+        $keranjang_user = $keranjang->where(['id_user' => $id_user])->countAllResults();
+        $response = [
+            'status' => 'success',
+            'data' => [
+                'count' => $keranjang_user,
+            ],
+        ];
+        return $this->response->setJSON($response, ResponseInterface::HTTP_OK,);
     }
+    function get_keranjang_user() {}
 }

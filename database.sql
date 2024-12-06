@@ -24,9 +24,9 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `time` int(11) NOT NULL,
   `batch` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table camp.migrations: ~7 rows (approximately)
+-- Dumping data for table camp.migrations: ~8 rows (approximately)
 INSERT INTO `migrations` (`id`, `version`, `class`, `group`, `namespace`, `time`, `batch`) VALUES
 	(1, '2024-10-06-121331', 'App\\Database\\Migrations\\TableUser', 'default', 'App', 1728231920, 1),
 	(2, '2024-10-06-161046', 'App\\Database\\Migrations\\TableDataDiri', 'default', 'App', 1728231920, 1),
@@ -34,7 +34,9 @@ INSERT INTO `migrations` (`id`, `version`, `class`, `group`, `namespace`, `time`
 	(4, '2024-10-13-175923', 'App\\Database\\Migrations\\TableDataSpasial', 'default', 'App', 1728842539, 2),
 	(5, '2024-12-04-154055', 'App\\Database\\Migrations\\TableFoto', 'default', 'App', 1733327027, 3),
 	(6, '2024-12-04-225423', 'App\\Database\\Migrations\\TableProduk', 'default', 'App', 1733353602, 4),
-	(7, '2024-12-04-234651', 'App\\Database\\Migrations\\TableProfilTempat', 'default', 'App', 1733357983, 5);
+	(7, '2024-12-04-234651', 'App\\Database\\Migrations\\TableProfilTempat', 'default', 'App', 1733357983, 5),
+	(8, '2024-12-05-004829', 'App\\Database\\Migrations\\TableKeranjang', 'default', 'App', 1733363548, 6),
+	(9, '2024-12-05-004836', 'App\\Database\\Migrations\\TableTransaksi', 'default', 'App', 1733363549, 6);
 
 -- Dumping structure for table camp.table_data_diri
 CREATE TABLE IF NOT EXISTS `table_data_diri` (
@@ -83869,7 +83871,7 @@ CREATE TABLE IF NOT EXISTS `table_foto` (
   PRIMARY KEY (`id_foto`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table camp.table_foto: ~10 rows (approximately)
+-- Dumping data for table camp.table_foto: ~8 rows (approximately)
 INSERT INTO `table_foto` (`id_foto`, `jenis`, `foto`, `created_at`) VALUES
 	(1, 'foto_produk', '241204112051_1733354451_cc7e887db7b492d3ca5b.jpg', '2024-12-04 23:20:51'),
 	(2, 'foto_produk', '241204112331_1733354611_d05ec93e0ce52218a083.jpg', '2024-12-04 23:23:31'),
@@ -91698,6 +91700,26 @@ INSERT INTO `table_kecamatan` (`id`, `id_kabupaten`, `name`) VALUES
 	('950831', '9508', 'Krepkuri'),
 	('950832', '9508', 'Pasir Putih');
 
+-- Dumping structure for table camp.table_keranjang
+CREATE TABLE IF NOT EXISTS `table_keranjang` (
+  `id_keranjang` int(5) NOT NULL AUTO_INCREMENT,
+  `id_produk` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_transaksi` varchar(11) NOT NULL,
+  `jumlah` int(11) NOT NULL,
+  `harga` int(11) NOT NULL,
+  `total_harga` bigint(20) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_keranjang`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+-- Dumping data for table camp.table_keranjang: ~3 rows (approximately)
+INSERT INTO `table_keranjang` (`id_keranjang`, `id_produk`, `id_user`, `id_transaksi`, `jumlah`, `harga`, `total_harga`, `created_at`, `updated_at`) VALUES
+	(1, 1, 10, '-', 3, 300000, 900000, '2024-12-05 01:56:23', NULL),
+	(2, 2, 10, '-', 1, 385000, 385000, '2024-12-05 02:10:02', NULL),
+	(3, 3, 10, '-', 1, 185000, 185000, '2024-12-05 02:10:10', NULL);
+
 -- Dumping structure for table camp.table_produk
 CREATE TABLE IF NOT EXISTS `table_produk` (
   `id_produk` int(5) NOT NULL AUTO_INCREMENT,
@@ -91737,7 +91759,7 @@ CREATE TABLE IF NOT EXISTS `table_profil_tempat` (
   PRIMARY KEY (`id_tempat`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table camp.table_profil_tempat: ~3 rows (approximately)
+-- Dumping data for table camp.table_profil_tempat: ~2 rows (approximately)
 INSERT INTO `table_profil_tempat` (`id_tempat`, `id_user`, `nama_tempat`, `foto`, `profil_status`, `jarak`, `lokasi`, `created_at`, `updated_at`) VALUES
 	(1, 7, 'Camping Manja', 'upload/owl/1.jpg', '-', '10', 'JWJR+7Q2, Kelitu, Kec. Bintang, Kabupaten Aceh Tengah, Aceh', '2024-12-05 07:21:12', NULL),
 	(2, 8, 'Kelaping Camping', 'upload/owl/2.jpg', '-', '20', 'JWJR+7Q2, Kelitu, Kec. Bintang, Kabupaten Aceh Tengah, Aceh', '2024-12-05 07:21:44', NULL),
@@ -91808,6 +91830,20 @@ CREATE TABLE IF NOT EXISTS `table_tempat_camping` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Dumping data for table camp.table_tempat_camping: ~0 rows (approximately)
+
+-- Dumping structure for table camp.table_transaksi
+CREATE TABLE IF NOT EXISTS `table_transaksi` (
+  `id_transaksi` int(5) NOT NULL AUTO_INCREMENT,
+  `id_user` int(11) NOT NULL,
+  `total_harga` int(11) NOT NULL,
+  `status_transaksi` varchar(50) NOT NULL,
+  `nomor_transaksi` varchar(50) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_transaksi`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Dumping data for table camp.table_transaksi: ~0 rows (approximately)
 
 -- Dumping structure for table camp.table_user
 CREATE TABLE IF NOT EXISTS `table_user` (

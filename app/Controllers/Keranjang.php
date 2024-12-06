@@ -61,5 +61,15 @@ class Keranjang extends BaseController
         ];
         return $this->response->setJSON($response, ResponseInterface::HTTP_OK,);
     }
-    function get_keranjang_user() {}
+    function get_keranjang_user()
+    {
+        $data['title'] = 'Keranjang';
+        $session = \Config\Services::session();
+        $keranjang = new ModelKeranjang();
+        $id = $session->get('id');
+        $get_data = $keranjang->join('table_produk', 'table_produk.id_produk = table_keranjang.id_produk')->where(['table_keranjang.id_user' => $id])->get()->getResult();
+        $data['keranjang'] = $get_data;
+        return view('cart/cart_user', $data);
+        // echo json_encode($get_data);
+    }
 }

@@ -41,7 +41,7 @@
                  <span>Daftar Pengguna</span></a>
          </li>
          <li class="nav-item">
-             <a class="nav-link" href="#" onclick="show_load()">
+             <a class="nav-link" href="<?= base_url('index.php/admin/admin/tempat_camping') ?>">
                  <i class="fas fa-fw fa-table"></i>
                  <span>Daftar Tempat Camping</span></a>
          </li>
@@ -57,7 +57,7 @@
          </li>
      <?php elseif ($session->get('role') == 'user'): ?>
          <li class="nav-item">
-             <a class="nav-link" href="<?= base_url('index.php/user/transaksi') ?>">
+             <a class="nav-link" href="<?= base_url('index.php/user') ?>">
                  <i class="fas fa-fw fa-book"></i>
                  <span>Pesanan</span></a>
          </li>

@@ -32,6 +32,7 @@ class TableTransaksi extends Migration
                 'type' => 'varchar',
                 'constraint' => 50,
             ],
+            'tgl_in' => [],
             'created_at' => [
                 'type' => 'datetime',
             ],

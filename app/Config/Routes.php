@@ -27,6 +27,7 @@ $routes->group('admin', ['filter' => 'administrator'], function ($routes) {
     $routes->get('produk/edit/(:num)', 'Produk::edit/$1');
     $routes->post('produk/edit/(:num)', 'Produk::edit_process/$1');
     $routes->get('produk/delete/(:num)', 'Produk::delete/$1');
+    $routes->get('tempat_camping', 'Admin::tempat_camping');
     // reset password
     $routes->post('user-reset-password', 'Admin::user_reset_password');
 });
@@ -37,6 +38,7 @@ $routes->group('user', ['filter' => ['user', 'profil']], function ($routes) {
     $routes->post('keranjang/add', 'Keranjang::keranjang_process');
     $routes->get('keranjang/get', 'Keranjang::check_keranjang_user');
     $routes->get('cart', 'Keranjang::get_keranjang_user');
+    $routes->get('cart/checkout', 'transaksi::store_stransaksi');
 });
 // use for owner camp
 $routes->group('owner', ['filter' => 'owner'], function ($routes) {

@@ -37,7 +37,7 @@
                         <a href="#" class="nav-item nav-link" onclick="show_load();">Cari Di Map</a>
                         <a href="#" class="nav-item nav-link" onclick="show_load();">Kontak</a>
                     </div>
-                    <a id="keranjang" href="<?= base_url('index.php/cart') ?>" class="btn btn-primary px-3 d-none d-lg-flex m-3">Keranjang </a>
+                    <a id="keranjang" href="<?= base_url('index.php/user/cart') ?>" class="btn btn-primary px-3 d-none d-lg-flex m-3">Keranjang </a>
                     <?php if (session('login') == true): ?>
                         <?php if (session('role') == 'administrator') {
                             $url = 'index.php/administrator';
